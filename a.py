@@ -1,39 +1,27 @@
 import requests.sessions
-
 import re
-
 import execjs
+
+import argparse
 
 class BaiDuFanYi():
 
     def __init__(self):
-
         self.homeUrl = "https://fanyi.baidu.com/"
-
         self.transUrl = "https://fanyi.baidu.com/v2transapi"
-
         self.headers = {
-
         'User-Agent':
-
         'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36'
-
         }
 
         self.gtk = None
-
         self.token = None
-
         self.s = requests.Session()
-
         self.get_params()
-
         self.get_params()
 
     def get_sign(self, query_string):
-
         JS_CODE = """
-
         function a(r, o) {
 
         for (var t = 0; t < o.length - 2; t += 3) {
@@ -99,41 +87,30 @@ class BaiDuFanYi():
         return execjs.compile(JS_CODE).call('token', query_string, self.gtk)
 
     def get_params(self):
-
         r = self.s.get(self.homeUrl, headers=self.headers)
-
         self.gtk = re.findall(r"window.gtk = '(.*?)';", r.text)[0]
-
         self.token = re.findall(r"token: '(.*?)',", r.text)[0]
 
     def translate(self, query_string):
-
         sign = self.get_sign(query_string)
-
         data = {
-
         'from': 'en',
-
         'to': 'zh',
-
         'query': query_string,
-
         'simple_means_flag': 3,
-
         'sign': sign,
-
         'token': self.token,
-
         }
 
         res = self.s.post(url=self.transUrl, data=data, headers=self.headers)
         # print(res.text)
+        print(res.json()['dict_result']['simple_means'])
         return res.json()['trans_result']['data'][0]['dst']
+def main():
+    words = input("请输入原文: ")
+    mydict = BaiDuFanYi()
+    print(f"翻译结果是： {mydict.translate(words)}")    
 
 if __name__ == '__main__':
+    main()
 
-    words = input("请输入原文: ")
-
-    mydict = BaiDuFanYi()
-
-    print(f"翻译结果是： {mydict.translate(words)}")
