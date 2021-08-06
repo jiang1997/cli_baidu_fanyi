@@ -2,7 +2,6 @@ import requests.sessions
 import re
 import execjs
 
-import argparse
 
 class BaiDuFanYi():
 
@@ -91,11 +90,11 @@ class BaiDuFanYi():
         self.gtk = re.findall(r"window.gtk = '(.*?)';", r.text)[0]
         self.token = re.findall(r"token: '(.*?)',", r.text)[0]
 
-    def translate(self, query_string):
+    def translate(self, query_string, f, t):
         sign = self.get_sign(query_string)
         data = {
-        'from': 'en',
-        'to': 'zh',
+        'from': f,
+        'to': t,
         'query': query_string,
         'simple_means_flag': 3,
         'sign': sign,
@@ -103,14 +102,8 @@ class BaiDuFanYi():
         }
 
         res = self.s.post(url=self.transUrl, data=data, headers=self.headers)
-        # print(res.text)
-        print(res.json()['dict_result']['simple_means'])
-        return res.json()['trans_result']['data'][0]['dst']
-def main():
-    words = input("请输入原文: ")
-    mydict = BaiDuFanYi()
-    print(f"翻译结果是： {mydict.translate(words)}")    
 
-if __name__ == '__main__':
-    main()
+        # print(res.json()['dict_result']['simple_means'])
+        # return res.json()['trans_result']['data'][0]['dst']
+        return res
 
