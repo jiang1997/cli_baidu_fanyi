@@ -1,4 +1,4 @@
-from BaiDuFanYi import BaiDuFanYi
+from .BaiDuFanYi import BaiDuFanYi
 import argparse
 import pprint
 
