@@ -1,9 +1,0 @@
-LICENSE
-README.md
-pyproject.toml
-setup.py
-src/fanyi.egg-info/PKG-INFO
-src/fanyi.egg-info/SOURCES.txt
-src/fanyi.egg-info/dependency_links.txt
-src/fanyi.egg-info/entry_points.txt
-src/fanyi.egg-info/top_level.txt

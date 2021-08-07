@@ -1,10 +1,10 @@
 Metadata-Version: 2.1
 Name: baidufanyi
 Version: 0.0.1
-Summary: A small example package
+Summary: cli translator
 Home-page: https://github.com/pypa/sampleproject
-Author: Example Author
-Author-email: author@example.com
+Author: jieke
+Author-email: jieke@live.cn
 License: UNKNOWN
 Project-URL: Bug Tracker, https://github.com/pypa/sampleproject/issues
 Platform: UNKNOWN
