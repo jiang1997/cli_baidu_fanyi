@@ -27,7 +27,8 @@ def CustomPrint(tmp, src, prefix=''):
             for cur_attr in tmp['attrs']:
                 cur_tmp = tmp['template'][cur_attr]
                 # print(i)
-                CustomPrint(cur_tmp, i[cur_attr], prefix)
+                if cur_attr in i:
+                    CustomPrint(cur_tmp, i[cur_attr], prefix)
         # print('\n')
 
 
@@ -70,8 +71,8 @@ def cli():
     parts_partTmp = {'name': 'parts-part', 'IsList': False}
     partsTmp = {'name': 'parts', 'IsList': True, 'attrs': ['part', 'means'], 'template': {'means': parts_meansTmp, 'part': parts_partTmp}}
 
-    ph_amTmp = {'name': '美音', 'IsList': False, 'title': '美音'}
-    ph_enTmp = {'name': '英音', 'IsList': False, 'title': '英音'}
+    ph_amTmp = {'name': 'am', 'IsList': False, 'title': 'am'}
+    ph_enTmp = {'name': 'en', 'IsList': False, 'title': 'en'}
 
     symbolTmp = {'name': 'symbol', 'IsList': False, 'attrs': ['parts', 'ph_am', 'ph_en'], 'template': {'ph_am': ph_amTmp, 'ph_en': ph_enTmp, 'parts': partsTmp}}
 
