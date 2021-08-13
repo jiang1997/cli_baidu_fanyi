@@ -103,7 +103,5 @@ class BaiDuFanYi():
 
         res = self.s.post(url=self.transUrl, data=data, headers=self.headers)
 
-        # print(res.json()['dict_result']['simple_means'])
-        # return res.json()['trans_result']['data'][0]['dst']
         return res
 
