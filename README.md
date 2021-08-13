@@ -6,7 +6,7 @@ command line tool built upon fanyi.baidu.com
 PyExecJS
 
 # example
-![ll](./Screenshot_2021-08-13_23-49-01.jpg)
+![ll](https://github.com/jiang1997/cli_baidu_fanyi/blob/main/Screenshot_2021-08-13_23-49-01.png)
 
 # to do
 - [ ] history cache
