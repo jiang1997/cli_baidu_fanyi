@@ -2,10 +2,17 @@ import requests.sessions
 import re
 import execjs
 
+import os
+import pickle
 
 class BaiDuFanYi():
 
     def __init__(self):
+        self.cache_dir = os.path.expanduser('~/.cache/fanyi')
+        if not os.path.isdir(self.cache_dir):
+            print(f'initial cache dir: {self.cache_dir}')
+            os.mkdir(self.cache_dir)
+        
         self.homeUrl = "https://fanyi.baidu.com/"
         self.transUrl = "https://fanyi.baidu.com/v2transapi"
         self.headers = {
@@ -16,8 +23,7 @@ class BaiDuFanYi():
         self.gtk = None
         self.token = None
         self.s = requests.Session()
-        self.get_params()
-        self.get_params()
+
 
     def get_sign(self, query_string):
         JS_CODE = """
@@ -91,17 +97,28 @@ class BaiDuFanYi():
         self.token = re.findall(r"token: '(.*?)',", r.text)[0]
 
     def translate(self, query_string, f, t):
-        sign = self.get_sign(query_string)
-        data = {
-        'from': f,
-        'to': t,
-        'query': query_string,
-        'simple_means_flag': 3,
-        'sign': sign,
-        'token': self.token,
-        }
+        if not os.path.exists(os.path.join(self.cache_dir, query_string)):
+            self.get_params()
+            self.get_params()
 
-        res = self.s.post(url=self.transUrl, data=data, headers=self.headers)
+            sign = self.get_sign(query_string)
+            data = {
+            'from': f,
+            'to': t,
+            'query': query_string,
+            'simple_means_flag': 3,
+            'sign': sign,
+            'token': self.token,
+            }
+
+            res = self.s.post(url=self.transUrl, data=data, headers=self.headers)
+            
+            with open(os.path.join(self.cache_dir, query_string), 'wb') as query_cache_file:
+                pickle.dump(res, query_cache_file)
+        else :
+            with open(os.path.join(self.cache_dir, query_string), 'rb') as query_cache_file:
+                res = pickle.load(query_cache_file)
+
 
         return res
 

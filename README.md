@@ -9,5 +9,5 @@ PyExecJS
 ![ll](Screenshot_2021-08-13_23-49-01.png)
 
 # to do
-- [ ] history cache
+- [x] history cache
 - [ ] translate embeded javascript codes to python
